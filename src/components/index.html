@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bundle & Save</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f6f6f6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: auto;
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      padding: 24px;
+    }
+
+    .header {
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      color: #008060;
+      margin-bottom: 24px;
+    }
+
+    .option {
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 16px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .option.active {
+      border-color: #008060;
+      background-color: #e6f4ec;
+    }
+
+    .option .title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    .option .discount {
+      font-weight: 600;
+      color: #008060;
+    }
+
+    .option .original-price {
+      text-decoration: line-through;
+      color: #999;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: -10px;
+      right: 10px;
+      background: linear-gradient(to right, #ffc107, #ff9800);
+      color: white;
+      font-size: 10px;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-weight: bold;
+    }
+
+    .dropdowns {
+      margin-top: 12px;
+    }
+
+    .dropdowns select {
+      margin-top: 6px;
+      padding: 6px 10px;
+      width: 48%;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .shipping-total {
+      text-align: center;
+      margin: 24px 0 12px;
+      font-size: 14px;
+    }
+
+    .shipping {
+      color: #008060;
+      font-weight: bold;
+    }
+
+    .total {
+      font-weight: bold;
+    }
+
+    .add-to-cart {
+      background: #008060;
+      color: white;
+      padding: 14px;
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">Bundle & Save</div>
+
+  <div class="option" onclick="selectOption(1)">
+    <div class="title">
+      <span>1 Pair</span>
+      <span>DKK 195.00</span>
+    </div>
+    <div class="discount">50% OFF</div>
+    <div class="dropdowns hidden" id="dropdowns-1">
+      <div>#1</div>
+      <select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+      <select><option>Black</option><option>White</option><option>Gray</option><option>Navy</option></select>
+    </div>
+  </div>
+
+  <div class="option active" onclick="selectOption(2)">
+    <div class="popular-badge">Most Popular</div>
+    <div class="title">
+      <span>2 Pair</span>
+      <span>DKK 345.00</span>
+    </div>
+    <div class="original-price">DKK 195.00</div>
+    <div class="discount">40% OFF</div>
+
+    <div class="dropdowns" id="dropdowns-2">
+      <div>#1</div>
+      <select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+      <select><option>Black</option><option>White</option><option>Gray</option><option>Navy</option></select>
+
+      <div>#2</div>
+      <select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+      <select><option>Black</option><option>White</option><option>Gray</option><option>Navy</option></select>
+    </div>
+  </div>
+
+  <div class="option" onclick="selectOption(3)">
+    <div class="title">
+      <span>3 Pair</span>
+      <span>DKK 528.00</span>
+    </div>
+    <div class="discount">60% OFF</div>
+    <div class="dropdowns hidden" id="dropdowns-3">
+      <div>#1</div>
+      <select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+      <select><option>Black</option><option>White</option><option>Gray</option><option>Navy</option></select>
+
+      <div>#2</div>
+      <select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+      <select><option>Black</option><option>White</option><option>Gray</option><option>Navy</option></select>
+
+      <div>#3</div>
+      <select><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+      <select><option>Black</option><option>White</option><option>Gray</option><option>Navy</option></select>
+    </div>
+  </div>
+
+  <div class="shipping-total">
+    <div class="shipping">Free 2 Day Shipping</div>
+    <div class="total">Total : <span id="total">DKK 360.00</span></div>
+  </div>
+
+  <button class="add-to-cart">+ Add to Cart</button>
+</div>
+
+<script>
+  const options = document.querySelectorAll(".option");
+  const total = document.getElementById("total");
+
+  function selectOption(optionId) {
+    options.forEach((opt, index) => {
+      const dropdown = document.getElementById(`dropdowns-${index + 1}`);
+      if (index === optionId - 1) {
+        opt.classList.add("active");
+        if (dropdown) dropdown.classList.remove("hidden");
+      } else {
+        opt.classList.remove("active");
+        if (dropdown) dropdown.classList.add("hidden");
+      }
+    });
+
+    switch(optionId) {
+      case 1:
+        total.textContent = "DKK 195.00";
+        break;
+      case 2:
+        total.textContent = "DKK 360.00";
+        break;
+      case 3:
+        total.textContent = "DKK 528.00";
+        break;
+    }
+  }
+</script>
+
+</body>
+</html>
